@@ -14,8 +14,16 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ __('Estas en línea!') }}
+
+                    <div class="m-4">
+                        @if (Auth::user()->is_admin == 1)
+
+                                <a class="btn btn-secondary" href="{{ route('users.index') }}" role="button">Panel de administración de usuarios</a>
+                        @endif
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
