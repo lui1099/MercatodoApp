@@ -15,20 +15,48 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+
 });
 
+/*
+        Guest Routes
+ */
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index'])->name('products');
 
-//Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users');
 
-//Route::delete('/users/{user}', [\App\Http\Controllers\UserController::class, 'destroy']);
 
-Route::resource('/users', \App\Http\Controllers\UserController::class);
+/*
+        User Routes
+ */
 
-Route::patch('/users/{user}/ban', [\App\Http\Controllers\UserController::class, 'ban'])->name('users.ban');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::patch('/users/{user}/unban', [\App\Http\Controllers\UserController::class, 'unban'])->name('users.unban');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::patch('/users/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+});
+
+
+/*
+        Admin Routes
+ */
+Route::middleware( ['admin.only', 'auth', 'verified'])->group(function () {
+
+    Route::resource('users', \App\Http\Controllers\UserController::class);
+
+    Route::patch('users/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+
+//    Route::resource('products', \App\Http\Controllers\UserController::class);
+
+    Route::get('products/create', [\App\Http\Controllers\ProductController::class, 'create']);
+
+    Route::post('products', [\App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
+
+    Route::get('products/{product}/edit', [\App\Http\Controllers\ProductController::class, 'edit']);
+
+    Route::delete('products/{product}', [\App\Http\Controllers\ProductController::class, 'destroy']);
+
+    Route::patch('products/{product}', [\App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
+
+});

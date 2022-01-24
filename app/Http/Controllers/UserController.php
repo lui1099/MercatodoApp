@@ -16,17 +16,11 @@ class UserController extends Controller
 {
     public function index(): View
     {
-        if(Gate::allows('admin_only', auth()->user())) {
-
-            $users = User::all(['id', 'is_admin', 'name', 'email']);
-            return view('users.userlist', compact('users'));
-        }
-        else {
-            abort(403);
-        }
+        $users = User::all(['id', 'role', 'name', 'email']);
+        return view('users.userlist', compact('users'));
     }
 
-    public function destroy($id): Redirector
+    public function destroy($id)
     {
 
         if(Gate::allows('admin_only', auth()->user())) {
@@ -47,18 +41,17 @@ class UserController extends Controller
     public function edit(User $user): View
     {
 
-        if (Gate::allows('admin_only', auth()->user())) {
+
 
             return view('users.useredit', ['user' => $user]);
 
-        } else {
-            abort(403);
-        }
+
     }
 
 
-    public function update(Request $request, $id): Redirector
+    public function update(Request $request, $id)
     {
+        dump($request, $id);
 
         if (Gate::allows('admin_only', auth()->user())) {
 
@@ -69,6 +62,10 @@ class UserController extends Controller
             {
                 $user->update(['is_banned' => true]);
             }
+            else
+            {
+                $user->update(['is_banned' => false]);
+            }
 
             return redirect(route('users.index'));
 
@@ -77,48 +74,6 @@ class UserController extends Controller
         }
     }
 
-//    public function ban(Request $request, $id)
-//    {
-//
-//        if (Gate::allows('admin_only', auth()->user())) {
-//
-//
-//
-//            $user = User::findOrFail($id);
-//            $user->is_banned = 1;
-//
-//            $user->update($request->all());
-//
-//            return redirect(route('users.index'));
-//
-//
-//
-//        } else {
-//            abort(403);
-//        }
-//    }
-//
-//
-//    public function unban(Request $request, $id)
-//    {
-//
-//        if (Gate::allows('admin_only', auth()->user())) {
-//
-//
-//
-//            $user = User::findOrFail($id);
-//            $user->is_banned = 0;
-//
-//            $user->update($request->all());
-//
-//            return redirect(route('users.index'));
-//
-//
-//
-//        } else {
-//            abort(403);
-//        }
-//    }
 
     /**
      * Display the specified resource.

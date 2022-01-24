@@ -13,11 +13,7 @@
                 @error('name') {{ $message }} @enderror
             </div>
 
-            <div class="mb-3">
-                <label for="email">e-mail</label>
-                <input name="email" type="email" value="{{ old('email') }} @isset($user) {{ $user->email }} @endisset" required>
-                @error('email') {{ $message }} @enderror
-            </div>
+
             <div class="mb-3">
                 <label for="is_banned">Inhabilitado?</label>
                 <input
@@ -33,4 +29,5 @@
             <a class="btn btn-secondary" href="{{ route('users.index') }}" role="button">Volver</a>
 
         </form>
+    </div>
 @endsection

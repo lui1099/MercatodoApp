@@ -16,16 +16,16 @@
             @foreach($users as $user)
                 <tr>
                     <td>{{$user->id}}</td>
-                    <td> @if ($user->is_admin == 1)
+                    <td> @if ($user->role == 'admin')
                             Admin
-                        @else
+                        @elseif ($user->role == 'user')
                             Usuario
                         @endif
                     </td>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td style="text-align:center">
-                        @if ($user->is_admin == 0)
+                        @if ($user->role != 'admin')
                             <button type="button" class="btn btn-danger"
                             onclick="
                             event.preventDefault();
@@ -34,48 +34,14 @@
 
                                 Eliminar Usuario
                             </button>
-                            <form id="delete-user-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: none">
-                                  @csrf
-                                      @method("DELETE")
+{{--                            <form id="delete-user-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: none">--}}
+{{--                                  @csrf--}}
+{{--                                      @method("DELETE")--}}
 
-                            </form>
+{{--                            </form>--}}
                         @else -
                         @endif
                     </td>
-{{--                    <td style="text-align:center">--}}
-{{--                        @if ($user->is_banned == 0)--}}
-
-
-{{--                            <button type="button" class="btn btn-outline-info"--}}
-{{--                                    onclick="--}}
-{{--                                        document.getElementById('ban-user-form-{{ $user->id }}').submit();">--}}
-{{--                                Inhabilitar Usuario--}}
-{{--                            </button>--}}
-{{--                            <form id="ban-user-form-{{ $user->id }}" action="{{ route('users.ban', $user->id) }}" method="POST" style="display: none">--}}
-{{--                                @csrf--}}
-{{--                                @method("PATCH")--}}
-
-{{--                            </form>--}}
-
-{{--                        @else Usuario Inhabilitado--}}
-{{--                        @endif--}}
-{{--                    </td>--}}
-{{--                    <td>--}}
-{{--                        @if($user->is_banned != 0)--}}
-{{--                            <button type="button" class="btn btn-dark"--}}
-{{--                                    onclick="--}}
-{{--                                        document.getElementById('unban-user-form-{{ $user->id }}').submit();">--}}
-{{--                                Habilitar Usuario--}}
-{{--                            </button>--}}
-{{--                            <form id="unban-user-form-{{ $user->id }}" action="{{ route('users.unban', $user->id) }}" method="POST" style="display: none">--}}
-{{--                                @csrf--}}
-{{--                                @method("PATCH")--}}
-
-{{--                            </form>--}}
-{{--                        @else Usuario Habilitado--}}
-{{--                        @endif--}}
-{{--                    </td>--}}
-
 
                     <td style="text-align:center">
                         <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}" role="button">Editar</a>
