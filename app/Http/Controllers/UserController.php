@@ -12,50 +12,37 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+
 class UserController extends Controller
 {
     public function index(): View
     {
-        $users = User::all(['id', 'role', 'name', 'email']);
+        $users = User::paginate(10, ['id','role', 'name', 'email']);
         return view('users.userlist', compact('users'));
     }
 
     public function destroy($id)
     {
 
-        if(Gate::allows('admin_only', auth()->user())) {
-
-
             User::destroy($id);
 
             return redirect(route('users.index'));
-        }
-        else {
-            abort(403);
-
-        }
-
 
     }
 
     public function edit(User $user): View
     {
 
-
-
             return view('users.useredit', ['user' => $user]);
-
 
     }
 
 
     public function update(Request $request, $id)
     {
-        dump($request, $id);
-
-        if (Gate::allows('admin_only', auth()->user())) {
 
             $user = User::findOrFail($id);
+
 
             $user->update($request->except('is_banned'));
             if ($request->has('is_banned'))
@@ -69,9 +56,6 @@ class UserController extends Controller
 
             return redirect(route('users.index'));
 
-        } else {
-            abort(403);
-        }
     }
 
 

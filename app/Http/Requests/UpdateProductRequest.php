@@ -13,7 +13,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,27 @@ class UpdateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:50',
+            'category' => 'required',
+            'brand' => 'required|max:50',
+            'description' => 'max:250',
+
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'El producto necesita un nombre!',
+            'name.max' => 'Maximo numero de caracteres para nombre: 50',
+
+            'category.required' => 'El producto necesita una categoria de la lista!',
+
+            'brand.required' => 'El producto necesita una marca!',
+            'brand.max' => 'Maximo numero de caracteres para marca: 50',
+
+            'description.max' => 'Maximo numero de caracteres para descripcion: 200'
+
         ];
     }
 }

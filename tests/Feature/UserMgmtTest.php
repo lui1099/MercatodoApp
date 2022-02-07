@@ -55,15 +55,18 @@ class UserMgmtTest extends TestCase
 
         $data = [
             'name' => 'PRUEBA',
-            'email' => 'prueba@prueba.com',
+            'is_banned' => false,
         ];
         $users = User::factory()->count(1)->create();
 
         $user = User::first();
         $this->assertCount(1, User::all());
 
-        $response = $this->patch(route('users.update', $user), $data);
+
+
+        $response = $this->patch(route('users.update', $user->id), $data);
 //        $response->assertRedirect();
+
 
         $user = $user->refresh();
         $this->assertEquals($data['name'], $user->name);
@@ -79,7 +82,8 @@ class UserMgmtTest extends TestCase
 
         $data = [1];
 
-        $response = $this->patch(route('users.ban', $user->is_banned));
+
+        $response = $this->patch(route('users.update', $user->is_banned), $data);
     //    $response->assertRedirect();
         $user = $user->refresh();
         $this->assertEquals($data[0], $user->is_banned);

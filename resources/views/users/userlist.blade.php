@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="container">
+        <a role="button" href="{{route('home')}}" class="btn btn-dark">Volver</a>
+    </div>
+    <div class="container" style="margin-top: 50px">
         <table class="table">
             <thead>
             <tr>
@@ -34,11 +37,11 @@
 
                                 Eliminar Usuario
                             </button>
-{{--                            <form id="delete-user-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: none">--}}
-{{--                                  @csrf--}}
-{{--                                      @method("DELETE")--}}
+                            <form id="delete-user-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: none">
+                                  @csrf
+                                      @method("DELETE")
 
-{{--                            </form>--}}
+                            </form>
                         @else -
                         @endif
                     </td>
@@ -50,5 +53,7 @@
             @endforeach
             </tbody>
         </table>
+        {{ $users->links() }}
+
     </div>
 @endsection

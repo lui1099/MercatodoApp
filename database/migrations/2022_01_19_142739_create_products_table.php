@@ -16,8 +16,11 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->enum('category', ['food', 'health&pc', 'cleaning']);
-            $table->string('name');
-            $table->string('file_path');
+            $table->string('name', 50)->unique();
+            $table->string('brand',50);
+            $table->string('description')->nullable();
+            $table->bigInteger('price')->unsigned();
+            $table->boolean('isActive')->default(1);
             $table->timestamps();
         });
     }

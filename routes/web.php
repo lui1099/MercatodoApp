@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,17 @@ Route::get('/', function () {
  */
 Auth::routes(['verify' => true]);
 
-Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index'])->name('products');
+Route::get('products/cleaning', [\App\Http\Controllers\ProductController::class, 'cleaning'])->name('products.cleaning');
+
+Route::get('products/health', [\App\Http\Controllers\ProductController::class, 'health'])->name('products.health');
+
+Route::get('products/food', [\App\Http\Controllers\ProductController::class, 'food'])->name('products.food');
+
+Route::get('products', [\App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
+
+Route::get('products/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.show')->middleware('checkProductIsActive:product');
+
+Route::post('products/search', [\App\Http\Controllers\ProductController::class, 'search'])->name('products.search');
 
 
 
@@ -35,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
 });
 
 
@@ -45,18 +58,12 @@ Route::middleware( ['admin.only', 'auth', 'verified'])->group(function () {
 
     Route::resource('users', \App\Http\Controllers\UserController::class);
 
-    Route::patch('users/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::get('products.create2', [\App\Http\Controllers\ProductController::class, 'create2'])->name('products.create2');
 
-//    Route::resource('products', \App\Http\Controllers\UserController::class);
+    Route::resource('products', \App\Http\Controllers\ProductController::class)->except('index','show');
 
-    Route::get('products/create', [\App\Http\Controllers\ProductController::class, 'create']);
+    Route::post('images/{id}', [\App\Http\Controllers\ImageController::class, 'storeImages'])->name('store.images');
 
-    Route::post('products', [\App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
-
-    Route::get('products/{product}/edit', [\App\Http\Controllers\ProductController::class, 'edit']);
-
-    Route::delete('products/{product}', [\App\Http\Controllers\ProductController::class, 'destroy']);
-
-    Route::patch('products/{product}', [\App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
+    Route::resource('images', \App\Http\Controllers\ImageController::class);
 
 });
