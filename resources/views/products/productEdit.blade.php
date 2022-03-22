@@ -44,6 +44,40 @@
                 <label for="description" style="vertical-align: center">Descripcion del producto</label>
                 <textarea style="vertical-align: middle" cols="90" name="description" id="description" type="text"  >{{ old('description') }} @isset($product) {{ $product->description }} @endisset</textarea>
             </div>
+            <div class="row my-4">
+                <div class="col-3">
+                    <h2>Imagen principal</h2>
+                    <div class="card">
+                        @if($product->image != null)
+                            <img src="{{ asset('storage/product/'.$product->image->content) }}" class="card-img-top" alt="...">
+                        @else
+                            <img src="{{ asset('storage/product/nophoto.jpg') }}" class="card-img-top" alt="...">
+                        @endif
+                    </div>
+                </div>
+                <div class="col-3">
+                    <h2>Imagen 2</h2>
+                    @if($product->images->has(1))
+                        <div class="card">
+                            <img src="{{ asset('storage/product/'.$product->images[1]->content) }}" class="card-img-top" alt="...">
+                        </div>
+
+                    @endif
+                </div>
+                <div class="col-3">
+                    <h2>Imagen 3</h2>
+                    @if($product->images->has(2))
+                        <div class="card">
+                            <img src="{{ asset('storage/product/'.$product->images[2]->content) }}" class="card-img-top" alt="...">
+                        </div>
+                    @endif
+                </div>
+                <div class="mb-3" style="margin-top: 5px">
+                    <a role="button" href="{{route('edit.images', $product)}}" class="btn btn-dark">Editar Imagenes</a>
+                </div>
+
+            </div>
+
             <div class="mb-3">
                 <label for="isActive">Habilitado?</label>
                 <input
@@ -53,7 +87,7 @@
             <button class="btn btn-primary" type="submit">Actualizar Producto</button>
         </form>
 
-    </div>1
+    </div>
 
 
 @endsection

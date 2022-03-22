@@ -28,7 +28,7 @@
         </div>
         <div class="mb-3">
             <label for="price">Precio por unidad, COP</label>
-            <input name="price" type="text" required>
+            <input name="price" type="number" required>
         </div>
         <div class="mb-3">
             <label for="category">Categoria</label>

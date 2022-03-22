@@ -41,8 +41,6 @@ class ImageController extends Controller
     public function storeImages(StoreImageRequest $request, $id)
     {
 
-
-
         $product = Product::find($id);
 
         if ($request->hasFile('picture1')) {
@@ -51,11 +49,11 @@ class ImageController extends Controller
 
             $picture1 = new Image([
                 "content" => $request->picture1->hashName(),
-                "product_id" =>  $id
+                "product_id" => $id
 
             ]);
             $picture1->product()->associate($product);
-            $picture1 -> save();
+            $picture1->save();
 
             if ($request->hasFile('picture2')) {
 
@@ -63,11 +61,11 @@ class ImageController extends Controller
 
                 $picture2 = new Image([
                     "content" => $request->picture2->hashName(),
-                    "product_id" =>  $id
+                    "product_id" => $id
 
                 ]);
                 $picture2->product()->associate($product);
-                $picture2 -> save();
+                $picture2->save();
 
             }
             if ($request->hasFile('picture3')) {
@@ -76,11 +74,11 @@ class ImageController extends Controller
 
                 $picture3 = new Image([
                     "content" => $request->picture3->hashName(),
-                    "product_id" =>  $id
+                    "product_id" => $id
 
                 ]);
                 $picture3->product()->associate($product);
-                $picture3 -> save();
+                $picture3->save();
 
             }
 
@@ -91,7 +89,7 @@ class ImageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Image  $image
+     * @param \App\Models\Image $image
      * @return \Illuminate\Http\Response
      */
     public function show(Image $image)
@@ -102,12 +100,19 @@ class ImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Image  $image
+     * @param \App\Models\Image $image
      * @return \Illuminate\Http\Response
      */
     public function edit(Image $image)
     {
-        //
+
+    }
+
+    public function editImage(Product $product)
+    {
+
+        return view('products.imageEdit', compact('product'));
+
     }
 
     /**
@@ -128,8 +133,63 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Image $image)
+    public function destroy(Image $image, Product $product)
     {
-        //
+        $product = Product::findOrFail($image->product_id);
+//        dd($product);
+        $image->delete();
+
+
+
+        return redirect()->route('edit.images', ['product' => $product]);
+    }
+
+    public function storeNewImages(StoreImageRequest $request, $id)
+    {
+        $product = Product::find($id);
+
+        if ($request->hasFile('picture1')) {
+
+            $request->picture1->store('product', 'public');
+
+            $picture1 = new Image([
+                "content" => $request->picture1->hashName(),
+                "product_id" => $id
+
+            ]);
+            $picture1->product()->associate($product);
+            $picture1->save(); }
+
+        elseif ($request->hasFile('picture2')) {
+
+                $request->picture2->store('product', 'public');
+
+                $picture2 = new Image([
+                    "content" => $request->picture2->hashName(),
+                    "product_id" => $id
+
+                ]);
+                $picture2->product()->associate($product);
+                $picture2->save();
+
+            }
+        elseif ($request->hasFile('picture3')) {
+
+                $request->picture3->store('product', 'public');
+
+                $picture3 = new Image([
+                    "content" => $request->picture3->hashName(),
+                    "product_id" => $id
+
+                ]);
+                $picture3->product()->associate($product);
+                $picture3->save();
+
+            }
+
+        return redirect()->route('edit.images', ['product' => $product]);
+
     }
 }
+
+

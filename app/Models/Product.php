@@ -24,6 +24,7 @@ class Product extends Model
         'description',
         'isActive'
     ];
+    private mixed $id;
 
     public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

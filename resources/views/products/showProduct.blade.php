@@ -64,7 +64,6 @@
                     </div>
                 @endif
             </div>
-
         </div>
     </div>
 

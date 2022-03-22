@@ -62,7 +62,11 @@ Route::middleware( ['admin.only', 'auth', 'verified'])->group(function () {
 
     Route::resource('products', \App\Http\Controllers\ProductController::class)->except('index','show');
 
+    Route::get('images/{product}/edit', [\App\Http\Controllers\ImageController::class, 'editImage'])->name('edit.images');
+
     Route::post('images/{id}', [\App\Http\Controllers\ImageController::class, 'storeImages'])->name('store.images');
+
+    Route::post('images/{id}', [\App\Http\Controllers\ImageController::class, 'storeNewImages'])->name('store.new.images');
 
     Route::resource('images', \App\Http\Controllers\ImageController::class);
 
