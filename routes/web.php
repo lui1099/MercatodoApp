@@ -47,6 +47,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
+
+    Route::post('/addcart', [\App\Http\Controllers\CartController::class, 'store'])->name('cart.store');
+
+    Route::post('/clearcart', [\App\Http\Controllers\CartController::class, 'destroy'])->name('cart.destroy');
+
+    Route::post('/deletecartitem', [\App\Http\Controllers\CartController::class, 'deleteItem'])->name('cart.deleteItem');
+
 
 });
 
@@ -54,20 +62,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
 /*
         Admin Routes
  */
-Route::middleware( ['admin.only', 'auth', 'verified'])->group(function () {
+    Route::middleware( ['admin.only', 'auth', 'verified'])->group(function () {
 
-    Route::resource('users', \App\Http\Controllers\UserController::class);
+        Route::resource('users', \App\Http\Controllers\UserController::class);
 
-    Route::get('products.create2', [\App\Http\Controllers\ProductController::class, 'create2'])->name('products.create2');
+        Route::get('products.create2', [\App\Http\Controllers\ProductController::class, 'create2'])->name('products.create2');
 
-    Route::resource('products', \App\Http\Controllers\ProductController::class)->except('index','show');
+        Route::resource('products', \App\Http\Controllers\ProductController::class)->except('index','show');
 
-    Route::get('images/{product}/edit', [\App\Http\Controllers\ImageController::class, 'editImage'])->name('edit.images');
+        Route::post('images/{id}', [\App\Http\Controllers\ImageController::class, 'storeImages'])->name('store.images');
 
-    Route::post('images/{id}', [\App\Http\Controllers\ImageController::class, 'storeImages'])->name('store.images');
+        Route::post('images/{id}/newImg', [\App\Http\Controllers\ImageController::class, 'storeNewImages'])->name('store.new.images');
 
-    Route::post('images/{id}', [\App\Http\Controllers\ImageController::class, 'storeNewImages'])->name('store.new.images');
+        Route::get('images/{product}/edit', [\App\Http\Controllers\ImageController::class, 'editImage'])->name('edit.images');
 
-    Route::resource('images', \App\Http\Controllers\ImageController::class);
-
-});
+        Route::resource('images', \App\Http\Controllers\ImageController::class);
+    }
+);

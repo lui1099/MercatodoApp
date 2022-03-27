@@ -19,16 +19,16 @@
                     <div class="m-4">
                         @if (Auth::user()->role == 'admin')
 
-                                <a class="btn btn-secondary" href="{{ route('users.index') }}" role="button">Panel de administración de usuarios</a>
+                                <a class="btn btn-secondary" href="{{ route('users.index') }}" role="button"> {{ __('home.buttons.userPanel') }}</a>
                         @endif
                     </div>
 
                     <div class="m-4">
                         @if (Auth::user()->role == 'admin')
-                            <a class="btn btn-warning" href="{{ route('products.index') }}" role="button">Ver y Editar Productos</a>
-                            <a class="btn btn-warning" href="{{ route('products.create2') }}" role="button">Ingresar nuevo producto</a>
+                            <a class="btn btn-warning" href="{{ route('products.index') }}" role="button">{{ trans('home.buttons.viewEditProducts') }}</a>
+                            <a class="btn btn-warning" href="{{ route('products.create2') }}" role="button">{{ trans('home.buttons.addNewProduct') }}</a>
                         @else
-                            <a class="btn btn-warning" href="{{ route('products.index') }}" role="button">Ver Productos</a>
+                            <a class="btn btn-warning" href="{{ route('products.index') }}" role="button">{{ trans('home.buttons.showProducts') }}</a>
                         @endif
                     </div>
                 </div>

@@ -2,10 +2,9 @@
 
 @section('content')
     <div class="container" style="margin-top: 50px">
-        <h1>Seleccione las imagenes del producto</h1>
-        <h3> Producto: {{ session()->get('product')->name }}</h3>
-        <h3> Id: {{ session()->get('product')->id }}</h3>
-        <h3> Marca: {{ session()->get('product')->brand }}</h3>
+        <h1>{{ trans('uploadimage.headers.selectImages') }}</h1>
+        <h3>{{ trans('uploadimage.headers.product') }}{{ session()->get('product')->name }}</h3>
+        <h3>{{ trans('uploadimage.headers.brand') }}{{ session()->get('product')->brand }}</h3>
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -28,8 +27,8 @@
             <div class="mb-3">
                 <input type="file" name="picture3">
             </div>
-            <button class="btn btn-primary" type="submit">Subir imagenes</button>
-            <a href="{{ route('products.index') }}" class="btn btn-dark">Guardar producto sin foto</a>
+            <button class="btn btn-primary" type="submit">{{ trans('uploadimage.buttons.uploadImages') }}</button>
+            <a href="{{ route('products.index') }}" class="btn btn-dark">{{ trans('uploadimage.buttons.withoutPicture') }}</a>
         </form>
 
 

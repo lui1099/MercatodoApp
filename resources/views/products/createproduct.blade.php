@@ -19,31 +19,31 @@
             </div>
         @endif
         <div class="mb-3">
-            <label for="name">Nombre del Producto</label>
+            <label for="name">{{ trans('createproduct.fields.name') }}</label>
             <input name="name" type="text" required>
         </div>
         <div class="mb-3">
-            <label for="brand">Marca del Producto</label>
+            <label for="brand">{{ trans('createproduct.fields.brand') }}</label>
             <input name="brand" type="text" required>
         </div>
         <div class="mb-3">
-            <label for="price">Precio por unidad, COP</label>
+            <label for="price">{{ trans('createproduct.fields.price') }}</label>
             <input name="price" type="number" required>
         </div>
         <div class="mb-3">
-            <label for="category">Categoria</label>
+            <label for="category">{{ trans('createproduct.fields.category') }}</label>
             <select name="category" id="category">
-                <option value="food" >Comida y bebidas</option>
-                <option value="health&pc" >Salud y cuidado personal</option>
-                <option value="cleaning" >Limpieza</option>
+                <option value="food" >{{ trans('createproduct.cascade.food') }}</option>
+                <option value="health&pc" >{{ trans('createproduct.cascade.health&pc') }}</option>
+                <option value="cleaning" >{{ trans('createproduct.cascade.cleaning') }}</option>
 
             </select>
         </div>
         <div class="mb-3">
-            <label for="description" style="vertical-align: center">Descripcion del producto</label>
+            <label for="description" style="vertical-align: center">{{ trans('createproduct.fields.description') }}</label>
             <textarea style="vertical-align: middle" cols="90" name="description" id="description" type="text" ></textarea>
         </div>
-        <button class="btn btn-primary" type="submit">Crear Producto</button>
+        <button class="btn btn-primary" type="submit">{{ trans('createproduct.buttons.submit') }}</button>
     </form>
 
 </div>

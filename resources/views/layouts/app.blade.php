@@ -70,6 +70,11 @@
                                 </div>
                             </li>
                         @endguest
+                        @auth
+                            <li class="nav-item" style="margin-left: 10px; margin-top: 8px">
+                               <a role="button" href="{{ route('cart.index') }}" >Cart ({{ \Gloudemans\Shoppingcart\Facades\Cart::content()->count() }})</a>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
             </div>
