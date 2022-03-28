@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
+use App\Models\Order;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use App\Request\GetInformationRequest;
+use App\Request\CreateSessionRequest;
+use App\Services\WebcheckoutService;
+use Illuminate\Support\Str;
 
 class CartController extends Controller
 {
@@ -106,4 +112,53 @@ class CartController extends Controller
 
         return redirect(route('cart.index'));
     }
+
+
+    public function goToPay(Request $request)
+    {
+        $total = $request->total;
+        $data =   [
+        'payment' => [
+            'reference' => /*base64_encode(Str::random(8))*/ '000001',
+            'description' => 'pago MercatodoApp',
+            'amount' => [
+                'currency' => 'COP',
+                'total' => $total
+            ],
+        ],
+        'returnUrl' => route('home'),
+        'expiration' => date('c', strtotime('+1 hour'))];
+
+
+        $data = ((new CreateSessionRequest($data)))->toArray();
+//        dd($data);
+        $response = (new WebcheckoutService())->createSession($data);
+
+        $requestId = $response['requestId'];
+        $processUrl = $response['processUrl'];
+
+        $order = new Order([
+
+
+        ]);
+
+        $cartContent = Cart::content();
+        foreach ($cartContent as $cartItem)
+            $newCartItem = new CartItem([
+                "name" => $cartItem->name,
+                "qty" => $cartItem->qty,
+                "pricePerUnit" => $cartItem->price,
+                "pricePerItem" => $cartItem->price*$cartItem->qty
+            ]);
+            $newCartItem->save();
+
+
+
+
+        return redirect()->away($processUrl);
+    }
+
+
+
 }
+

@@ -55,6 +55,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/deletecartitem', [\App\Http\Controllers\CartController::class, 'deleteItem'])->name('cart.deleteItem');
 
+    Route::post('/gotopay', [\App\Http\Controllers\CartController::class, 'goToPay'])->name('cart.goToPay');
+
 
 });
 

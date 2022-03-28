@@ -64,6 +64,15 @@
 {{--                        @method("DELETE")--}}
                 </form>
             </div>
+            <div>
+                <form action="{{ route('cart.goToPay') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="total" value="{{ $total}}">
+
+                    <button type="submit" class="btn btn-primary">{{ trans('cart.buttons.goToPay') }}</button>
+
+                </form>
+            </div>
         @elseif($cartContent->count() == 0)
             <div style="text-align: center">
                 <h1 style="font-weight: bolder; alignment: center" > {{ trans('cart.messages.emptyCart') }} </h1>

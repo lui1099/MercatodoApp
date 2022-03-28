@@ -20,6 +20,7 @@ return [
     'buttons' => [
         'clearCart' => 'Limpiar carrito',
         'deleteItem' => 'Borrar ítem del carrito',
+        'goToPay' => 'Ir A Pagar',
     ],
 
 ];
