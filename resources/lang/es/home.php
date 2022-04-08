@@ -28,6 +28,7 @@ return [
         'viewEditProducts' => 'Ver y Editar Productos',
         'addNewProduct' => 'Ingresar nuevo producto',
         'showProducts' => 'Ver Productos',
+        'showOrders' => 'Ver Historial de Órdenes',
 
     ],
 

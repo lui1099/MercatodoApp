@@ -14,7 +14,8 @@ class GetInformationRequest implements WebcheckoutRequestContract
         $tranqui = '024h1IlD';
         $login = '6dd490faf9cb87a9862245da41170ff2';
         $tranKey = base64_encode(hash('sha1', $nonce.$seed.$tranqui/*config('webcheckout.tranKey')*/, true));
-//        dd($tranKey);
+
+
 
         return [
             'auth' => [
@@ -29,6 +30,6 @@ class GetInformationRequest implements WebcheckoutRequestContract
 
     public static function url(?int $session_id): string
     {
-        return /*config('webcheckout.url').'api/session/'*/'https://dev.placetopay.com/redirection/api/session'.$session_id;
+        return /*config('webcheckout.url').'api/session/'*/'https://dev.placetopay.com/redirection/api/session/'.$session_id;
     }
 }

@@ -11,7 +11,12 @@ class CartItem extends Model
 
     public function order()
     {
-        $this->belongsTo(Order::class);
+        return $this->belongsTo(Order::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 
     protected $fillable = [
@@ -19,7 +24,8 @@ class CartItem extends Model
         'name',
         'qty',
         'pricePerUnit',
-        'pricePerItem'
+        'pricePerItem',
+        'product_id',
 
 
         ];

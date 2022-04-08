@@ -31,6 +31,9 @@
                             <a class="btn btn-warning" href="{{ route('products.index') }}" role="button">{{ trans('home.buttons.showProducts') }}</a>
                         @endif
                     </div>
+                    <div class="m-4">
+                        <a class="btn btn-danger" href="{{ route('orders.index') }}" role="button">{{ trans('home.buttons.showOrders') }}</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -22,7 +22,8 @@ class Product extends Model
         'file_path',
         'price',
         'description',
-        'isActive'
+        'isActive',
+        'stock'
     ];
     private mixed $id;
 

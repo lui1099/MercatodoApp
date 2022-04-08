@@ -57,6 +57,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/gotopay', [\App\Http\Controllers\CartController::class, 'goToPay'])->name('cart.goToPay');
 
+    Route::get('orders', [\App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
+
+    Route::get('orders/{order}', [\App\Http\Controllers\OrderController::class, 'show'])->name('orders.show');
+
+    Route::post('orders/{order}/refresh', [\App\Http\Controllers\OrderController::class, 'refresh'])->name('orders.refresh');
+
+    Route::post('orders/{order}/retry', [\App\Http\Controllers\OrderController::class, 'retry'])->name('orders.retry');
+
 
 });
 

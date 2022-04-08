@@ -17,14 +17,15 @@ class CreateCartItemsTable extends Migration
         Schema::create('cart_items', function (Blueprint $table) {
 
             $table->id();
-            $table->string('name');
-            $table->string('qty');
+            $table->string('name', 50);
+            $table->unsignedInteger('qty');
             $table->unsignedFloat('pricePerUnit');
             $table->unsignedFloat('pricePerItem');
             $table->foreignId('order_id')
                 ->references('id')
                 ->on('orders')
                 ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

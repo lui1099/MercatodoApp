@@ -61,7 +61,7 @@
                 </button>
                 <form id="clearCart" action="{{ route('cart.destroy') }}" method="POST" style="display: none">
                     @csrf
-{{--                        @method("DELETE")--}}
+
                 </form>
             </div>
             <div>

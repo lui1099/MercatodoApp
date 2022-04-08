@@ -26,11 +26,9 @@ class WebcheckoutService implements \App\Contracts\WebcheckoutContract
 
     public function createSession(array $data)
     {
-//        $a = env('WEBCHECKOUT_URL');
-//        dd($a);
-//        dd(config('webcheckout.url'));
+
         $createSessionRequest = new CreateSessionRequest($data);
-//        dd($createSessionRequest);
+
         $data = $createSessionRequest->toArray();
         if (!array_key_exists('locale', $data))
             $data['locale'] = 'es_CO';
@@ -40,10 +38,9 @@ class WebcheckoutService implements \App\Contracts\WebcheckoutContract
             $data['userAgent'] = 'Symphony';
 
 
-//        dd($data);
 
         $url = $createSessionRequest::url(null);
-//        dd($url);
+
         return $this->request($data, $url);
     }
 

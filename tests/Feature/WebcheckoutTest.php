@@ -24,6 +24,16 @@ class WebcheckoutTest extends TestCase
         $this->assertArrayHasKey('seed', $request['auth']);
     }
 
+    public function testItCanGetInformationFromService()
+    {
+//        $request = (new GetInformationRequest()) -> auth();
+        $response = (new WebcheckoutService())->getInformation(52384);
+        dd($response);
+
+
+    }
+
+
     public function testItCanGetCreateSessionRequest()
     {
         $data = $this->getCreateSessionData();

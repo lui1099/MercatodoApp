@@ -50,6 +50,8 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $product = Product::findOrFail($request->input('product_id'));
+        $newAvailable = ($product->available)-($request->input('quantity'));
+        $product->update(['available' => $newAvailable]);
         Cart::add($product->id, $product->name, $request->input('quantity'), $product->price);
 
         return redirect()->route('products.show', ['product' => $product])->with('message', 'producto agregado'/*trans('showProduct.messages.success')*/);
@@ -107,7 +109,7 @@ class CartController extends Controller
      */
     public function deleteItem(Request $request)
     {
-//        dd($request);
+
         Cart::remove($request->rowId);
 
         return redirect(route('cart.index'));
@@ -116,10 +118,14 @@ class CartController extends Controller
 
     public function goToPay(Request $request)
     {
+        $referenceReference = Order::latest()->first()->reference;
+        $reference = $referenceReference + 1;
+
+
         $total = $request->total;
         $data =   [
         'payment' => [
-            'reference' => /*base64_encode(Str::random(8))*/ '000001',
+            'reference' => $reference,
             'description' => 'pago MercatodoApp',
             'amount' => [
                 'currency' => 'COP',
@@ -138,21 +144,33 @@ class CartController extends Controller
         $processUrl = $response['processUrl'];
 
         $order = new Order([
-
-
+            'reference' => $reference,
+            'requestId' => $requestId,
+            'user_id' => auth()->user()->id,
+            'total' => $total,
         ]);
+        $order->save();
+
+        $orderId = $order->id;
+
+
 
         $cartContent = Cart::content();
-        foreach ($cartContent as $cartItem)
+
+        foreach ($cartContent as $cartItem) {
             $newCartItem = new CartItem([
                 "name" => $cartItem->name,
                 "qty" => $cartItem->qty,
                 "pricePerUnit" => $cartItem->price,
-                "pricePerItem" => $cartItem->price*$cartItem->qty
-            ]);
+                "pricePerItem" => $cartItem->price*$cartItem->qty,
+                "order_id" => $orderId,
+                "product_id" => $cartItem->id
+             ]);
+            $newCartItem->order()->associate($order);
             $newCartItem->save();
+        }
 
-
+        Cart::destroy();
 
 
         return redirect()->away($processUrl);

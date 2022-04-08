@@ -12,17 +12,20 @@ class Order extends Model
     protected $fillable = [
 
         'requestId',
-        'total'
+        'total',
+        'reference',
+        'user_id',
+        'status'
 
     ];
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
-    public function cartItem() {
+    public function cartItems() {
 
-        $this->hasMany(CartItem::class);
+        return $this->hasMany(CartItem::class);
     }
 
 
