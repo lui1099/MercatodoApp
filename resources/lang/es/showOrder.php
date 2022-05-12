@@ -18,6 +18,13 @@ return [
     'buttons' => [
         'refreshOrder' => 'Refrescar estado',
         'retryOrder' => 'Reintentar pago',
+        'dashboard' => 'Volver'
+    ],
+
+    'titles' => [
+        'pending' => 'Carrito de Compras de la Orden',
+        'status' => 'Estado de la Orden',
+        'reference' => 'Referencia',
     ],
 
 

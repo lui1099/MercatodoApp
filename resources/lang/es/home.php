@@ -27,6 +27,8 @@ return [
         'userPanel' => 'Panel de administración de usuarios',
         'viewEditProducts' => 'Ver y Editar Productos',
         'addNewProduct' => 'Ingresar nuevo producto',
+        'importProducts' => 'Importar productos',
+        'exportProducts' => 'Exportar productos',
         'showProducts' => 'Ver Productos',
         'showOrders' => 'Ver Historial de Órdenes',
 

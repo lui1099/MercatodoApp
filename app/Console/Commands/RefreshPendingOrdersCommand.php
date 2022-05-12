@@ -40,7 +40,8 @@ class RefreshPendingOrdersCommand extends Command
      */
     public function handle()
     {
-        $orders = Order::where('status', 'pending');
+        $orders = Order::where('status', 'pending')->get();
+
         foreach ($orders as $order)
         {
             $response = (new WebcheckoutService())->getInformation($order->requestId);

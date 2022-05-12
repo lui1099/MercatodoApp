@@ -16,7 +16,7 @@ class WebcheckoutTest extends TestCase
     public function testItCanGetInformationRequest()
     {
         $request = (new GetInformationRequest()) -> auth();
-//        dd($request);
+        dd($request);
         $this->assertArrayHasKey('auth', $request);
         $this->assertArrayHasKey('login', $request['auth']);
         $this->assertArrayHasKey('tranKey', $request['auth']);
@@ -26,10 +26,9 @@ class WebcheckoutTest extends TestCase
 
     public function testItCanGetInformationFromService()
     {
-//        $request = (new GetInformationRequest()) -> auth();
+
         $response = (new WebcheckoutService())->getInformation(52384);
         dd($response);
-
 
     }
 
@@ -43,7 +42,7 @@ class WebcheckoutTest extends TestCase
 
     public function testItCanCreateSessionFromService()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
 
        $data = $this->getCreateSessionData();
        $data = ((new CreateSessionRequest($data)))->toArray();

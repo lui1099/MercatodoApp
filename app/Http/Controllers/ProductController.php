@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProductsExport;
+use App\Imports\ProductsImport;
+use App\Jobs\NotifyUserOfCompletedExport;
+use App\Jobs\NotifyUserOfCompletedImport;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use Maatwebsite\Excel\Facades\Excel;
 use phpDocumentor\Reflection\Types\False_;
+use Maatwebsite\Excel\Concerns\Importable;
 
 class ProductController extends Controller
 {
@@ -21,7 +27,7 @@ class ProductController extends Controller
     {
 
         $products = Product::paginate();
-//        dd($products[0]->image->content);
+
         return view('products.productslist', compact('products'));
     }
 
@@ -61,6 +67,9 @@ class ProductController extends Controller
                 "category" => $request->input('category'),
                 "price" => $request->input('price'),
                 "description" => $request->input('description'),
+                "stock" => $request->input('stock'),
+                "available" => $request->input('available'),
+
 
             ]);
             $product->save();
@@ -187,4 +196,56 @@ class ProductController extends Controller
 
         return view('products.productslist', compact('products'));
     }
+
+    public function import(Request $request)
+    {
+
+
+
+        $import = new ProductsImport();
+        try {
+        $import->queue($request->file('sheet'))->chain([new NotifyUserOfCompletedImport(auth()->user())]);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+        }
+
+
+//        $import->import($request->file('sheet'));
+////
+//        dd($failures);
+
+
+
+
+       return redirect()->route('products.importForm')->with('message', trans('importProducts.messages.queue'));
+
+    }
+
+    public function importForm()
+    {
+
+        return view('products.importProduct');
+    }
+
+    public function exportView()
+    {
+
+        return view('products.exportView');
+    }
+
+    public function export(Request $request)
+    {
+
+        $category = $request->category;
+
+//        (new ProductsExport($category))->queue('Products.xlsx')->chain([
+//            new NotifyUserOfCompletedExport(auth()->user())]);
+
+        return Excel::download(new ProductsExport($category), 'invoices.xlsx');
+
+        return redirect()->route('products.exportView')->with('message', trans('exportView.messages.queue'));
+
+
+    }
+
 }

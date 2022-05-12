@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <a role="button" href="{{route('home')}}" class="btn btn-dark">{{ trans('userlist.fields.userName') }}</a>
+        <a role="button" href="{{route('home')}}" class="btn btn-dark">{{ trans('userlist.buttons.back') }}</a>
     </div>
     <div class="container" style="margin-top: 50px">
         <table class="table">

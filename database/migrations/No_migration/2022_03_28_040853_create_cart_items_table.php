@@ -21,6 +21,7 @@ class CreateCartItemsTable extends Migration
             $table->unsignedInteger('qty');
             $table->unsignedFloat('pricePerUnit');
             $table->unsignedFloat('pricePerItem');
+            $table->smallInteger('product_id');
             $table->foreignId('order_id')
                 ->references('id')
                 ->on('orders')

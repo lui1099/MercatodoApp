@@ -31,6 +31,18 @@
             <input name="price" type="number" required>
         </div>
         <div class="mb-3">
+            <label for="stock">{{ trans('createproduct.fields.stock') }}</label>
+            <input name="stock" type="number" required>
+        </div>
+        <div class="mb-3">
+            <label for="available">{{ trans('createproduct.fields.stock') }}</label>
+            <input name="available" type="number" required>
+        </div>
+        <div class="mb-3">
+            <label for="reference">{{ trans('createproduct.fields.reference') }}</label>
+            <input name="reference" type="text" required>
+        </div>
+        <div class="mb-3">
             <label for="category">{{ trans('createproduct.fields.category') }}</label>
             <select name="category" id="category">
                 <option value="food" >{{ trans('createproduct.cascade.food') }}</option>

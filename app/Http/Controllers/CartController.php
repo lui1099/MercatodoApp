@@ -22,7 +22,7 @@ class CartController extends Controller
     public function index()
     {
         $cartContent = Cart::content();
-//        dd($cartContent);
+
         $total = 0;
         foreach ($cartContent as $cartItem)
             $total = $total+$cartItem->qty*$cartItem->price;
@@ -41,20 +41,24 @@ class CartController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $product = Product::findOrFail($request->input('product_id'));
         $newAvailable = ($product->available)-($request->input('quantity'));
-        $product->update(['available' => $newAvailable]);
-        Cart::add($product->id, $product->name, $request->input('quantity'), $product->price);
+        if ($newAvailable < 0){
 
-        return redirect()->route('products.show', ['product' => $product])->with('message', 'producto agregado'/*trans('showProduct.messages.success')*/);
+            return redirect()->route('products.show', ['product' => $product])->with('message', trans('showProduct.messages.notAvailable'));
+        }
+        else {
+            $product->update(['available' => $newAvailable]);
+            Cart::add($product->id, $product->name, $request->input('quantity'), $product->price);
+
+            return redirect()->route('products.show', ['product' => $product])->with('message', trans('showProduct.messages.success'));
+        }
+
+
+
     }
 
     /**
@@ -130,10 +134,11 @@ class CartController extends Controller
             'amount' => [
                 'currency' => 'COP',
                 'total' => $total
+                ],
             ],
-        ],
-        'returnUrl' => route('home'),
-        'expiration' => date('c', strtotime('+1 hour'))];
+        'returnUrl' => route('orders.refreshAfterCheckout', $reference),
+        'expiration' => date('c', strtotime('+1 hour'))
+        ];
 
 
         $data = ((new CreateSessionRequest($data)))->toArray();
@@ -169,6 +174,8 @@ class CartController extends Controller
             $newCartItem->order()->associate($order);
             $newCartItem->save();
         }
+
+
 
         Cart::destroy();
 

@@ -25,7 +25,8 @@ return [
         ],
 
     'messages' => [
-        'success' => 'Producto agregado al carrito',
+        'success' => 'Producto agregado al carrito!',
+        'notAvailable' => 'La cantidad solicitada supera nuestra disponibilidad.',
 
     ],
 

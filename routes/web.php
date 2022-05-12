@@ -65,6 +65,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('orders/{order}/retry', [\App\Http\Controllers\OrderController::class, 'retry'])->name('orders.retry');
 
+    Route::get('orders/{order}/refreshAfterCheckout', [\App\Http\Controllers\OrderController::class, 'refreshAfterCheckout'])->name('orders.refreshAfterCheckout');;
+
 
 });
 
@@ -75,6 +77,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware( ['admin.only', 'auth', 'verified'])->group(function () {
 
         Route::resource('users', \App\Http\Controllers\UserController::class);
+
+        Route::get('products.exportView', [\App\Http\Controllers\ProductController::class, 'exportView'])->name('products.exportView');
+
+        Route::post('products.export', [\App\Http\Controllers\ProductController::class, 'export'])->name('products.export');
+
+        Route::post('products.import', [\App\Http\Controllers\ProductController::class, 'import'])->name('products.import');
+
+        Route::get('products.importForm', [\App\Http\Controllers\ProductController::class, 'importForm'])->name('products.importForm');
 
         Route::get('products.create2', [\App\Http\Controllers\ProductController::class, 'create2'])->name('products.create2');
 

@@ -2,11 +2,15 @@
 
 @section('content')
 
+    <div class="container">
+        <a role="button" href="{{route('home')}}" class="btn btn-dark">{{ trans('showOrder.buttons.dashboard') }}</a>
+    </div>
+
     <div class="container" style="margin-top: 50px">
         <table class="table">
             <tr>
-                <td><h3>Referencia: {{ $order->reference }}</h3></td>
-                <td> Estado de la Orden:
+                <td><h3>{{ trans('showOrder.titles.reference') }}: {{ $order->reference }}</h3></td>
+                <td> {{ trans('showOrder.titles.status') }}:
                     @if($order->status == 'pending')
                         <h3 style="color: orange; font-weight: bolder" > {{ trans('showOrder.status.pending') }}</h3>
                         <form action="{{ route('orders.refresh', $order) }}" method="POST">
@@ -31,7 +35,7 @@
                 </td>
             </tr>
         </table>
-        <h2>Carrito de Compras de la Orden</h2>
+        <h2>{{ trans('showOrder.titles.shoppingCart') }}</h2>
 
         <table class="table">
             <thead>

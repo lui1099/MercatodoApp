@@ -26,26 +26,9 @@ class OrderController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+
+
 
     /**
      * Display the specified resource.
@@ -63,16 +46,7 @@ class OrderController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -97,12 +71,53 @@ class OrderController extends Controller
         //
     }
 
+    public function refreshAfterCheckout($reference)
+    {
+        $orderAr = Order::where('reference', $reference)->get();
+
+        $order = $orderAr[0];
+
+        $total = $order->total;
+
+
+        $response = (new WebcheckoutService())->getInformation($order->requestId);
+//
+        if ($response['status']['status'] == 'APPROVED') {
+            $order->update(['status' => 'approved']);
+
+            $cartContent = $order->cartItems;
+            foreach ($cartContent as $cartItem) {
+                $product = Product::findOrFail($cartItem->product_id);
+                $newStock = ($product->stock)-($cartItem->qty);
+                $product->update(['stock' => $newStock]);
+            }
+
+        }
+        elseif ($response['status']['status'] == 'REJECTED') {
+            $order->update(['status' => 'rejected']);
+
+
+            $cartContent = $order->cartItems;
+            foreach ($cartContent as $cartItem) {
+                $product = Product::findOrFail($cartItem->product_id);
+                $newAvailable = ($product->available) + ($cartItem->qty);
+                $product->update(['available' => $newAvailable]);
+            }
+        }
+
+        $orderStatus = $order->status;
+
+        return view('orders.orderResult', compact('orderStatus', 'cartContent', 'total'));
+
+    }
+
     public function refresh($order)
     {
         $id = $order;
         $order = Order::findOrFail($id);
 
         $response = (new WebcheckoutService())->getInformation($order->requestId);
+
         if ($response['status']['status'] == 'APPROVED') {
             $order->update(['status' => 'approved']);
 

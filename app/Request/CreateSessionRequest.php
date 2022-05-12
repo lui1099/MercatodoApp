@@ -5,6 +5,7 @@ namespace App\Request;
 use App\Contracts\WebcheckoutRequestContract;
 use Illuminate\Http\Request;
 
+
 class CreateSessionRequest extends GetInformationRequest implements WebcheckoutRequestContract
 {
 
@@ -22,7 +23,7 @@ class CreateSessionRequest extends GetInformationRequest implements WebcheckoutR
 
     public static function url(?int $session_id): string
     {
-        return /*config('webcheckout.url')*/'https://dev.placetopay.com/redirection/api/session';
+        return config('webcheckout.url')/*'https://dev.placetopay.com/redirection/api/session'*/;
     }
 
     public function toArray()
@@ -33,7 +34,7 @@ class CreateSessionRequest extends GetInformationRequest implements WebcheckoutR
             'payment' => $this->payment,
             'expiration' => $this->expiration,
             'returnUrl' => $this->returnUrl,
-            'ipAddress' => /*app(Request::class)->getClientIp()*/'127.0.0.1',
+            'ipAddress' => app(Request::class)->getClientIp()/*'127.0.0.1'*/,
             'userAgent' => substr(app(Request::class)->header('User-Agent'),0, 255)
         ]);
     }

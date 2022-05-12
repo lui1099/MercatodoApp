@@ -16,6 +16,7 @@ class Product extends Model
     protected $with = ['image'];
 
     protected $fillable = [
+        'reference',
         'name',
         'category',
         'brand',
@@ -23,7 +24,8 @@ class Product extends Model
         'price',
         'description',
         'isActive',
-        'stock'
+        'stock',
+        'available'
     ];
     private mixed $id;
 

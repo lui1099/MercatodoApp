@@ -7,6 +7,9 @@ return [
         'price' => 'Precio en COP',
         'category' => 'Categoría',
         'description' => 'Descripciòn del producto',
+        'stock' => 'Stock',
+        'available' => 'Disponibles',
+        'reference' => 'Referencia',
 
     ],
 

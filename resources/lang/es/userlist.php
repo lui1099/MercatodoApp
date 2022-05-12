@@ -26,6 +26,7 @@ return [
     'buttons' => [
         'deleteUser' => 'Eliminar Usuario',
         'edit' => 'Editar',
+        'back' => 'volver'
 
     ],
 

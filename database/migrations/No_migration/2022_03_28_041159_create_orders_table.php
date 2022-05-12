@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->integer('requestId');
             $table->unsignedFloat('total');
+            $table->mediumInteger('reference');
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users')
