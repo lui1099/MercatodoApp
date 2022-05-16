@@ -25,6 +25,8 @@ return [
         'pending' => 'Carrito de Compras de la Orden',
         'status' => 'Estado de la Orden',
         'reference' => 'Referencia',
+        'shoppingCart' => 'Carrito de compras',
+
     ],
 
 

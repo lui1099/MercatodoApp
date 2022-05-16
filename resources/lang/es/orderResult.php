@@ -10,7 +10,8 @@ return [
     'titles' => [
         'status' => 'Estado de tu orden',
         'approved' => 'APROBADA',
-        'rejected' => 'RECHAZADA'
+        'rejected' => 'RECHAZADA',
+        'shoppingCart' => 'Compraste:'
     ],
 
     'buttons' => [

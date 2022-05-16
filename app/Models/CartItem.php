@@ -26,6 +26,7 @@ class CartItem extends Model
         'pricePerUnit',
         'pricePerItem',
         'product_id',
+        'category',
 
 
         ];

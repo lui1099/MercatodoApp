@@ -12,10 +12,11 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Excel;
 
 
-class ProductsExport implements FromQuery, WithHeadings/*, Responsable, ShouldQueue*/
+class ProductsExport implements FromQuery, WithHeadings, WithMapping, Responsable, ShouldQueue
 
 {
     use Exportable;
@@ -23,6 +24,7 @@ class ProductsExport implements FromQuery, WithHeadings/*, Responsable, ShouldQu
     public function __construct(string $category)
     {
         $this->category = $category;
+
     }
 
 //    private $fileName = 'invoices.xlsx';
@@ -58,5 +60,23 @@ class ProductsExport implements FromQuery, WithHeadings/*, Responsable, ShouldQu
             'stock',
             'available'
         ];
+    }
+
+    public function map($product): array
+    {
+        return [
+            $product->reference,
+            $product->category,
+            $product->name,
+            $product->brand,
+            $product->description,
+            $product->price,
+            $product->isActive,
+            $product->stock,
+            $product->available,
+
+
+        ];
+
     }
 }

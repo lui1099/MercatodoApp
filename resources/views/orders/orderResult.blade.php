@@ -20,7 +20,7 @@
             @endif
         </div>
 
-        <h2>{{ trans('showOrder.titles.shoppingCart') }}</h2>
+        <h2 style="font-weight: bolder">{{ trans('orderResult.titles.shoppingCart') }}</h2>
 
         <table class="table">
             <thead>

@@ -31,6 +31,7 @@ return [
         'exportProducts' => 'Exportar productos',
         'showProducts' => 'Ver Productos',
         'showOrders' => 'Ver Historial de Órdenes',
+        'reports' => 'Reportes',
 
     ],
 

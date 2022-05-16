@@ -41,8 +41,10 @@ class ImportReady extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Saludos, Usuario!')
-                    ->action('Su Importe acaba de ser completado', url('/'))
+                    ->line('Saludos, Usuario!
+
+                    Su Importe acaba de ser completado')
+//                    ->action('Su Importe acaba de ser completado', url('/'))
                     ->line('Gracias por usar MercatodoApp!');
     }
 

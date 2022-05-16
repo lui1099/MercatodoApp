@@ -22,7 +22,7 @@ return [
     ],
 
     'messages' => [
-        'download' => 'Descargar',
+        'queue' => 'El exporte esta siendo procesado en cola. Se le informará vía correo electrónico una vez esté listo.',
     ],
 
 

@@ -26,15 +26,15 @@ class ProductsImport
     implements
     ToModel,
     WithHeadingRow,
-//    WithValidation,
-//    SkipsOnFailure,
+    WithValidation,
+    SkipsOnFailure,
     WithChunkReading,
     ShouldQueue,
     WithEvents,
-//    SkipsOnError,
+    SkipsOnError,
     WithUpserts
 {
-    use Importable/*, SkipsFailures, SkipsErrors*/;
+    use Importable, SkipsFailures, SkipsErrors;
 
 //    public function __construct(User $importedBy)
 //    {
@@ -110,4 +110,5 @@ class ProductsImport
     {
         return 'reference';
     }
+
 }

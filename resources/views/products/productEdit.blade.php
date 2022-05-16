@@ -73,7 +73,7 @@
                     @endif
                 </div>
                 <div class="mb-3" style="margin-top: 5px">
-                    <a role="button" href="{{route('edit.images', $product)}}" class="btn btn-dark">{{ trans('productEdit.labels.editImages') }}</a>
+                    <a role="button" href="{{route('edit.images', $product)}}" class="btn btn-dark">{{ trans('productEdit.buttons.editImages') }}</a>
                 </div>
 
             </div>

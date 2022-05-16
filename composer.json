@@ -6,13 +6,17 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.4|^8.1",
+        "barryvdh/laravel-dompdf": "^1.0",
         "bumbummen99/shoppingcart": "^4.1",
+        "chartisan/php": "^1.2",
+        "consoletvs/charts": "7.*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "^3.1",
+        "spatie/browsershot": "^3.53"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.7",

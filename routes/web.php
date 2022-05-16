@@ -76,6 +76,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
  */
     Route::middleware( ['admin.only', 'auth', 'verified'])->group(function () {
 
+        Route::get('viewReport/{path}', [\App\Http\Controllers\ReportController::class, 'viewReport'])->name('viewReport');
+
+        Route::post('/piechart', [\App\Http\Controllers\ReportController::class, 'create'])->name('createChart');
+
+        Route::get('piechart', [\App\Http\Controllers\ReportController::class, 'piechart'])->name('piechart');
+
+        Route::get('reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+
+        Route::post('reports/totalSalesByCtgry', [\App\Http\Controllers\ReportController::class, 'totalSalesByCtgry'])->name('totalSalesByCtgry');
+
+        Route::post('reports/salesStatus', [\App\Http\Controllers\ReportController::class, 'salesStatus'])->name('salesStatus');
+
+        Route::get('downloadExport/{path}/dld', [\App\Http\Controllers\ProductController::class, 'downloadExport'])->name('downloadExport');
+
+        Route::get('downloadExport/{path}', [\App\Http\Controllers\ProductController::class, 'downloadExportView'])->name('downloadExportView');
+
         Route::resource('users', \App\Http\Controllers\UserController::class);
 
         Route::get('products.exportView', [\App\Http\Controllers\ProductController::class, 'exportView'])->name('products.exportView');

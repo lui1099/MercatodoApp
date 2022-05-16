@@ -15,7 +15,10 @@ class Order extends Model
         'total',
         'reference',
         'user_id',
-        'status'
+        'status',
+        'food',
+        'healthpc',
+        'cleaning'
 
     ];
 

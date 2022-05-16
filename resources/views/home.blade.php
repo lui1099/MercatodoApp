@@ -29,6 +29,7 @@
                             <a class="btn btn-warning" href="{{ route('products.create2') }}" role="button">{{ trans('home.buttons.addNewProduct') }}</a>
                             <a class="btn btn-warning" href="{{ route('products.importForm') }}" role="button">{{ trans('home.buttons.importProducts') }}</a>
                             <a class="btn btn-warning" href="{{ route('products.exportView') }}" role="button">{{ trans('home.buttons.exportProducts') }}</a>
+                            <a class="btn btn-info" href="{{ route('reports.index') }}" role="button">{{ trans('home.buttons.reports') }}</a>
                         @else
                             <a class="btn btn-warning" href="{{ route('products.index') }}" role="button">{{ trans('home.buttons.showProducts') }}</a>
                         @endif

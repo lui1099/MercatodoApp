@@ -4,6 +4,13 @@
     <div class="container" style="text-align: center">
         <h1 style="margin-top: 50px"> {{ trans('exportView.titles.exportProductList') }}</h1>
         <div style="margin-top: 50px">
+
+            @if(session()->has('message'))
+                <div class="alert-success">{{ session('message') }}</div>
+            @endif
+
+        </div>
+        <div style="margin-top: 50px">
             <form method="POST" action="{{ route('products.export') }}">
                 @csrf
 

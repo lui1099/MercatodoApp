@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use phpDocumentor\Reflection\Types\False_;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -69,6 +70,7 @@ class ProductController extends Controller
                 "description" => $request->input('description'),
                 "stock" => $request->input('stock'),
                 "available" => $request->input('available'),
+                "reference" => $request->input('reference'),
 
 
             ]);
@@ -200,21 +202,9 @@ class ProductController extends Controller
     public function import(Request $request)
     {
 
-
-
         $import = new ProductsImport();
-        try {
+
         $import->queue($request->file('sheet'))->chain([new NotifyUserOfCompletedImport(auth()->user())]);
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            $failures = $e->failures();
-        }
-
-
-//        $import->import($request->file('sheet'));
-////
-//        dd($failures);
-
-
 
 
        return redirect()->route('products.importForm')->with('message', trans('importProducts.messages.queue'));
@@ -238,13 +228,29 @@ class ProductController extends Controller
 
         $category = $request->category;
 
-//        (new ProductsExport($category))->queue('Products.xlsx')->chain([
-//            new NotifyUserOfCompletedExport(auth()->user())]);
 
-        return Excel::download(new ProductsExport($category), 'invoices.xlsx');
+        $result = uniqid();
+
+        $path = $result;
+
+
+        (new ProductsExport($category, $path))->store('/public/exports/'.$result.'.xlsx')->chain([
+            new NotifyUserOfCompletedExport(auth()->user(), $path)]);
 
         return redirect()->route('products.exportView')->with('message', trans('exportView.messages.queue'));
 
+
+    }
+
+    public function downloadExportView($path)
+    {
+        return view('products.downloadExport', compact('path'));
+
+    }
+
+    public function downloadExport($path)
+    {
+        return response()->download('storage/exports/'.$path.'.xlsx');
 
     }
 

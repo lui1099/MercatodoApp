@@ -35,7 +35,7 @@
             <input name="stock" type="number" required>
         </div>
         <div class="mb-3">
-            <label for="available">{{ trans('createproduct.fields.stock') }}</label>
+            <label for="available">{{ trans('createproduct.fields.available') }}</label>
             <input name="available" type="number" required>
         </div>
         <div class="mb-3">

@@ -158,19 +158,21 @@ class CartController extends Controller
 
         $orderId = $order->id;
 
-
-
         $cartContent = Cart::content();
 
         foreach ($cartContent as $cartItem) {
+
+            $product = Product::findOrFail($cartItem->id);
             $newCartItem = new CartItem([
                 "name" => $cartItem->name,
                 "qty" => $cartItem->qty,
                 "pricePerUnit" => $cartItem->price,
                 "pricePerItem" => $cartItem->price*$cartItem->qty,
                 "order_id" => $orderId,
-                "product_id" => $cartItem->id
+                "product_id" => $cartItem->id,
+                "category" => $product->category,
              ]);
+
             $newCartItem->order()->associate($order);
             $newCartItem->save();
         }

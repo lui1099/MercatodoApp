@@ -16,11 +16,18 @@ class PreventBackHistory
      */
     public function handle(Request $request, Closure $next)
     {
+        $headers = [
+            'Cache-Control' => 'nocache, no-store, max-age=0, must-revalidate',
+            'Pragma' => 'no-cache',
+            "Cache-Control: post-check=0, pre-check=0" => false,
+            'Expires' => 'Sun, 02 Jan 1990 00:00:00 GMT'
+        ];
         $response = $next($request);
 
-        return $response->header('Cache-Control','nocache, no-store, max-age=0, must-revalidate')
-            ->header('Pragma','no-cache')
-            ->header("Cache-Control: post-check=0, pre-check=0", false)
-            ->header('Expires','Sun, 02 Jan 1990 00:00:00 GMT');
+        foreach($headers as $key => $value) {
+            $response->headers->set($key, $value);
+        }
+
+        return $response;
     }
 }

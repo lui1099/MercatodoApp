@@ -6,18 +6,21 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Storage;
 
-class ExportReady extends Notification
+class ReportReady extends Notification
 {
     use Queueable;
 
-    public string $path;
+    public $path;
 
-    public function __construct(string $path)
+    /**
+     * Create a new notification instance.
+     *
+     * @return void
+     */
+    public function __construct($path)
     {
         $this->path = $path;
-
     }
 
     /**
@@ -40,9 +43,9 @@ class ExportReady extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('Saludos, Usuario!')
-            ->action('Su Exporte acaba de ser completado', url('/downloadExport/'.$this->path))
-            ->line('Gracias por usar MercatodoApp!');
+                    ->line('Hola, su reporte esta listo para ver')
+                    ->action('Click aqui para ver', url('/viewReport/'.$this->path))
+                    ->line('Gracias por usar MercadoApp!');
     }
 
     /**

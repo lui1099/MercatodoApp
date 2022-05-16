@@ -15,7 +15,7 @@ return [
     'buttons' => [
         'uploadImages' => 'Subir Imágenes',
         'back' => 'Volver',
-        'withoutPictures' => 'Guardar Producto Sin Imágenes',
+        'withoutPicture' => 'Guardar Producto Sin Imágenes',
 
     ],
 
